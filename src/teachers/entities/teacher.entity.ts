@@ -46,6 +46,9 @@ export class Teacher extends Model {
   @Column
   position: string;
 
+  @Column
+  isAdmin: Boolean;
+
   @ForeignKey(() => Faculty)
   @Column
   facultyId: number;

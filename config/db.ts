@@ -29,8 +29,7 @@ export const SequelizeConnection = SequelizeModule.forRoot({
   repositoryMode: true,
   logging: true,
   // sync: {
-  //   // force: true,
-  //   alter: true,
+  //   // force: true, //   alter: true,
   // },
   synchronize: true,
   // synchronize: Boolean(process.env.DBSynchronize) || true,
