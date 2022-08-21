@@ -2,7 +2,9 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { FacultiesService } from './faculties.service';
 import { CreateFacultyDto } from './dto/create-faculty.dto';
 import { UpdateFacultyDto } from './dto/update-faculty.dto';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { Roles } from 'src/auth/auth.decorator';
+import { Role } from 'src/auth/role.enum';
 
 @Controller('faculties')
 @ApiTags('faculties')
@@ -10,6 +12,8 @@ export class FacultiesController {
   constructor(private readonly facultiesService: FacultiesService) {}
 
   @Post()
+  @ApiBearerAuth()
+  @Roles(Role.admin)
   create(@Body() createFacultyDto: CreateFacultyDto) {
     return this.facultiesService.create(createFacultyDto);
   }

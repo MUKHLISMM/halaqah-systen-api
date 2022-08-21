@@ -8,8 +8,8 @@ import { Major } from 'src/majors/entities/major.entity';
 export class Student extends Model {
   @Column({
     primaryKey: true,
-    autoIncrement: true,
-    unique: true,
+        autoIncrement:true,
+        unique:true
   })
   id: number;
 
@@ -26,9 +26,9 @@ export class Student extends Model {
   birthDay: Date;
 
   @Column({
-    type: DataType.INTEGER({ length: 10 }),
+    type: DataType.STRING({ length: 10 }),
   })
-  phoneNumber: number;
+  phoneNumber: string;
 
   @Column
   lineAccount: string;

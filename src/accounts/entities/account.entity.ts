@@ -33,6 +33,12 @@ export class Account extends Model {
   @Column
   password: string;
 
+  @Column({
+    comment:"1=Admin 2=Teacher 3=Student"
+  })
+  roleid: number
+
+
   @ForeignKey(() => Student)
   @Column
   studentId: number;

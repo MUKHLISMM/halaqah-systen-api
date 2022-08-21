@@ -1,7 +1,8 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
+import { Public } from 'src/auth/auth.decorator';
 import { AccountsService } from './accounts.service';
-import { CreateAccountDto } from './dto/create-account.dto';
+import { CreateAccountDto, LogInDto } from './dto/create-account.dto';
 import { UpdateAccountDto } from './dto/update-account.dto';
 
 @Controller('accounts')
@@ -32,5 +33,11 @@ export class AccountsController {
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.accountsService.remove(+id);
+  }
+
+  @Post('login')
+  @Public()
+  Login(@Body() logInDto:LogInDto){
+    return this.accountsService.Login(logInDto) 
   }
 }

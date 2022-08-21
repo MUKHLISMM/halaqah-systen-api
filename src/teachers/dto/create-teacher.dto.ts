@@ -1,4 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
+import { Length } from "class-validator";
 
 export class CreateTeacherDto {
 
@@ -15,8 +16,8 @@ export class CreateTeacherDto {
       birthDay: Date;
     
       @ApiProperty()
- 
-      phoneNumber: number;
+      @Length(10,10)
+      phoneNumber: string;
     
       @ApiProperty()
       lineAccount: string;

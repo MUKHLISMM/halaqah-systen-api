@@ -8,6 +8,11 @@ import { SeederforRoot, SequelizeConnection } from 'config/db';
 import { StudentsModule } from './students/students.module';
 import { TeachersModule } from './teachers/teachers.module';
 import { AdminsModule } from './admins/admins.module';
+import { APP_GUARD } from '@nestjs/core';
+import { AuthModule } from './auth/auth.module';
+import { JwtStrategy } from './auth/jwt.strategy';
+import { JwtAuthGuard } from './auth/jwt.guard';
+
 
 @Module({
   imports: [
@@ -18,9 +23,18 @@ import { AdminsModule } from './admins/admins.module';
     SeederforRoot,
     StudentsModule,
     TeachersModule,
-    AdminsModule
+    AdminsModule,
+    AuthModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    JwtStrategy,
+    AppService,
+    {
+      provide: APP_GUARD,
+      useClass: JwtAuthGuard,
+    },
+],
 })
 export class AppModule { }

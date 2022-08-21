@@ -6,6 +6,10 @@ import { Account } from './entities/account.entity';
 import { Admin } from 'src/admins/entities/admin.entity';
 import { Student } from 'src/students/entities/student.entity';
 import { Teacher } from 'src/teachers/entities/teacher.entity';
+import { PassportModule } from '@nestjs/passport';
+import { JwtModule } from '@nestjs/jwt';
+import { jwtConstants } from 'constants/jwt';
+import { JwtStrategy } from 'src/auth/jwt.strategy';
 
 @Module({
   imports:[
@@ -14,9 +18,14 @@ import { Teacher } from 'src/teachers/entities/teacher.entity';
       Admin,
       Student,
       Teacher
-    ])
+    ]),
+    PassportModule.register({ defaultStrategy: 'jwt' }),
+    JwtModule.register({
+      secret: jwtConstants.secret,
+      signOptions: { expiresIn: '1h' },
+    }),
   ],
   controllers: [AccountsController],
-  providers: [AccountsService]
+  providers: [AccountsService,JwtStrategy]
 })
 export class AccountsModule {}
