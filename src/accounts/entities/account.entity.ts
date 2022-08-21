@@ -21,6 +21,9 @@ export class Account extends Model {
   })
   id: number;
 
+  @Column
+  username:string
+
   @Column({
     unique: true,
     type: DataType.STRING,

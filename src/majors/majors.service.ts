@@ -1,26 +1,33 @@
 import { Injectable } from '@nestjs/common';
+import { InjectModel } from '@nestjs/sequelize';
 import { CreateMajorDto } from './dto/create-major.dto';
 import { UpdateMajorDto } from './dto/update-major.dto';
+import { Major } from './entities/major.entity';
 
 @Injectable()
 export class MajorsService {
+  constructor(
+    @InjectModel(Major)
+    private majorModel: typeof Major,
+  ) {}
+
   create(createMajorDto: CreateMajorDto) {
-    return 'This action adds a new major';
+    return this.majorModel.create({...createMajorDto});
   }
 
   findAll() {
-    return `This action returns all majors`;
+    return this.majorModel.findAll();
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} major`;
+    return this.majorModel.findByPk(id);
   }
 
   update(id: number, updateMajorDto: UpdateMajorDto) {
-    return `This action updates a #${id} major`;
+    return this.majorModel.update(updateMajorDto,{where:{id}});
   }
 
   remove(id: number) {
-    return `This action removes a #${id} major`;
+    return this.majorModel.destroy({where:{id}});
   }
 }

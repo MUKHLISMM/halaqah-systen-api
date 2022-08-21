@@ -16,9 +16,7 @@ export class FacultiesService {
   }
 
   findAll() {
-    return this.facultyModel.findAll({
-      paranoid:false
-    });
+    return this.facultyModel.findAll();
   }
 
   findOne(id: number) {

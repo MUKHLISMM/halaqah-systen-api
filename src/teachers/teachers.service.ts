@@ -1,26 +1,34 @@
 import { Injectable } from '@nestjs/common';
+import { InjectModel } from '@nestjs/sequelize';
 import { CreateTeacherDto } from './dto/create-teacher.dto';
 import { UpdateTeacherDto } from './dto/update-teacher.dto';
+import { Teacher } from './entities/teacher.entity';
 
 @Injectable()
 export class TeachersService {
+  constructor(
+    @InjectModel(Teacher)
+    private teacherModel: typeof Teacher,
+  ){}
   create(createTeacherDto: CreateTeacherDto) {
-    return 'This action adds a new teacher';
+    return this.teacherModel.create({...createTeacherDto});
   }
 
   findAll() {
-    return `This action returns all teachers`;
+    return this.teacherModel.findAll({
+      paranoid:false
+    });
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} teacher`;
+    return this.teacherModel.findByPk(id);
   }
 
   update(id: number, updateTeacherDto: UpdateTeacherDto) {
-    return `This action updates a #${id} teacher`;
+    return this.teacherModel.update(updateTeacherDto, {where:{id}});
   }
 
   remove(id: number) {
-    return `This action removes a #${id} teacher`;
+    return this.teacherModel.destroy({where:{id}});
   }
 }

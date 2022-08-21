@@ -1,26 +1,35 @@
 import { Injectable } from '@nestjs/common';
+import { InjectModel } from '@nestjs/sequelize';
 import { CreateStudentDto } from './dto/create-student.dto';
 import { UpdateStudentDto } from './dto/update-student.dto';
+import { Student } from './entities/student.entity';
 
 @Injectable()
 export class StudentsService {
+constructor(
+  @InjectModel(Student)
+  private studentModel: typeof Student,
+) {}
+
   create(createStudentDto: CreateStudentDto) {
-    return 'This action adds a new student';
+    return this.studentModel.create({...createStudentDto});
   }
 
   findAll() {
-    return `This action returns all students`;
+    return this.studentModel.findAll({
+      paranoid:false
+    });
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} student`;
+    return this.studentModel.findByPk(id);
   }
 
   update(id: number, updateStudentDto: UpdateStudentDto) {
-    return `This action updates a #${id} student`;
+    return this.studentModel.update(updateStudentDto, {where:{id}});
   }
 
   remove(id: number) {
-    return `This action removes a #${id} student`;
+    return this.studentModel.destroy({where:{id}});
   }
 }

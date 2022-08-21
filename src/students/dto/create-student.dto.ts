@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { isNotEmpty } from 'class-validator';
 
 export class CreateStudentDto {
   @ApiProperty()
