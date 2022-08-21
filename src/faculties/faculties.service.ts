@@ -1,26 +1,35 @@
 import { Injectable } from '@nestjs/common';
+import { InjectModel } from '@nestjs/sequelize';
 import { CreateFacultyDto } from './dto/create-faculty.dto';
 import { UpdateFacultyDto } from './dto/update-faculty.dto';
+import { Faculty } from './entities/faculty.entity';
 
 @Injectable()
 export class FacultiesService {
+  constructor(
+    @InjectModel(Faculty)
+    private facultyModel: typeof Faculty,
+  ) {}
+
   create(createFacultyDto: CreateFacultyDto) {
-    return 'This action adds a new faculty';
+    return this.facultyModel.create({ ...createFacultyDto });
   }
 
   findAll() {
-    return `This action returns all faculties`;
+    return this.facultyModel.findAll({
+      paranoid:false
+    });
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} faculty`;
+    return this.facultyModel.findByPk(id);
   }
 
   update(id: number, updateFacultyDto: UpdateFacultyDto) {
-    return `This action updates a #${id} faculty`;
+    return this.facultyModel.update(updateFacultyDto,{where:{id}});
   }
 
   remove(id: number) {
-    return `This action removes a #${id} faculty`;
+    return this.facultyModel.destroy({where:{id}});
   }
 }

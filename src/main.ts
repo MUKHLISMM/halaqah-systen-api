@@ -1,12 +1,21 @@
+import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { AppModule } from './app.module';
+import * as compression from 'compression';
+
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule,{cors:{
+    origin:'*',
+    credentials:false
+  }});
+  app.useGlobalPipes(new ValidationPipe()); 
+  app.use(compression());
+
   const config = new DocumentBuilder()
-    .setTitle('activitySystem')
-    .setDescription('The cats API description')
+    .setTitle('ActivitySystem')
+    .setDescription('The Halaqah API description')
     .setVersion('1.0')
     .build();
   const document = SwaggerModule.createDocument(app, config);

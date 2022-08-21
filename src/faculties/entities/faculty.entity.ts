@@ -1,9 +1,9 @@
 import { Column, Model, Table } from "sequelize-typescript";
 
 @Table({
-    paranoid: true
+    paranoid: true,
 })
-export class Faculty  extends Model{
+export class Faculty extends Model{
     @Column({
         primaryKey: true,
         autoIncrement:true,
