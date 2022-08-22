@@ -37,9 +37,9 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
 
   handleRequest(err, user, info, context, status) {
     // You can throw an exception based on either "info" or "err" arguments
-    console.log('====================================');
-    console.log({ err, user, info, context, status });
-    console.log('====================================');
+    // console.log('====================================');
+    // console.log({ err, user, info, context, status });
+    // console.log('====================================');
 
     if (err) {
       throw new HttpException({ ...err }, HttpStatus.UNAUTHORIZED);
@@ -63,13 +63,14 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
     if (!isRoles || typeof isRoles === 'undefined') {
       console.log('is member');
       return user;
-    } else if (user.roleId === Role.admin) {
+    } else if ( user.roleId === Role.admin) {
       console.log('is Admin');
       return user;
-    } else if (user.roleId === Role.teacherAdmin && isRoles !== Role.admin) {
+    } else if (isRoles === Role.teacherAdmin && user.roleId === Role.teacherAdmin) {
       console.log('teacherAdmin');
       return user;
-    } else if (user.roleId === Role.teacher && isRoles !== Role.admin && isRoles !== Role.teacherAdmin  ) {
+    } else if (isRoles === Role.teacher && (user.roleId === Role.teacher || user.roleId === Role.teacherAdmin)) {
+      console.log('teacher');
       return user
     } else {
       throw new HttpException('คุณไม่มีสิทธิ', HttpStatus.FORBIDDEN);

@@ -20,9 +20,9 @@ const dialectOptions = {
 export const SequelizeConnection = SequelizeModule.forRoot({
   host: 'localhost',
   port: 3306,
-  username: 'root',
-  password: '',
-  database: 'halaqahSystem',
+  username: 'bnh',
+  password: '.Bnh123456',
+  database: 'test',
   dialect: 'mysql',
   models: [defaultPath],
   autoLoadModels: true,

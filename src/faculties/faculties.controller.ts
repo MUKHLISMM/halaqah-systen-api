@@ -8,12 +8,12 @@ import { Role } from 'src/auth/role.enum';
 
 @Controller('faculties')
 @ApiTags('faculties')
+@ApiBearerAuth()
 export class FacultiesController {
   constructor(private readonly facultiesService: FacultiesService) {}
 
   @Post()
-  @ApiBearerAuth()
-  @Roles(Role.admin)
+  @Roles(Role.teacher)
   create(@Body() createFacultyDto: CreateFacultyDto) {
     return this.facultiesService.create(createFacultyDto);
   }
