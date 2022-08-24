@@ -6,4 +6,7 @@ export class CreateMajorDto {
 
     @ApiProperty()
     shortName:string
+
+    @ApiProperty()
+    facultyId:number
 }

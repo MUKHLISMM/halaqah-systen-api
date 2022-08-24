@@ -1,5 +1,6 @@
 
-import { Column, Model, Table } from "sequelize-typescript";
+import { BelongsTo, Column, ForeignKey, Model, Table } from "sequelize-typescript";
+import { Faculty } from "src/faculties/entities/faculty.entity";
 
 @Table({
     paranoid: true
@@ -17,5 +18,11 @@ export class Major  extends Model{
 
     @Column
     shortName: String
+
+    @ForeignKey(() => Faculty)
+    @Column
+    facultyId: number
+    @BelongsTo(()=> Faculty)
+    faculty: Faculty
 
 }

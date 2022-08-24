@@ -22,7 +22,7 @@ export class Account extends Model {
   id: number;
 
   @Column
-  username:string
+  userName:string
 
   @Column({
     unique: true,
@@ -36,7 +36,7 @@ export class Account extends Model {
   @Column({
     comment:"1=Admin 2=Teacher 3=Student"
   })
-  roleid: number
+  roleId: number
 
 
   @ForeignKey(() => Student)

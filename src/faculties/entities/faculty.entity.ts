@@ -17,4 +17,6 @@ export class Faculty extends Model{
     @Column
     shortName: String
 
+    
+
 }

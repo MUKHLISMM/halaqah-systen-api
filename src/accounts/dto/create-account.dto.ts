@@ -4,7 +4,7 @@ import { IsEmail, IsNotEmpty } from 'class-validator';
 export class CreateAccountDto {
   @ApiProperty()
   @IsNotEmpty()
-  username: string;
+  userName: string;
   
   @ApiProperty()
   @IsNotEmpty()
@@ -16,7 +16,7 @@ export class CreateAccountDto {
   password: string;
 
   @ApiProperty()
-  roleid: number
+  roleId: number
 
   @ApiProperty()
   studentId: number;

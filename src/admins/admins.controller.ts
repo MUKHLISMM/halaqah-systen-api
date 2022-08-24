@@ -1,11 +1,15 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { Roles } from 'src/auth/auth.decorator';
+import { Role } from 'src/auth/role.enum';
 import { AdminsService } from './admins.service';
 import { CreateAdminDto } from './dto/create-admin.dto';
 import { UpdateAdminDto } from './dto/update-admin.dto';
 
 @Controller('admins')
 @ApiTags('admins')
+@ApiBearerAuth()
+@Roles(Role.admin)
 export class AdminsController {
   constructor(private readonly adminsService: AdminsService) {}
 

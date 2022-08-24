@@ -10,14 +10,18 @@ import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
 import { jwtConstants } from 'constants/jwt';
 import { JwtStrategy } from 'src/auth/jwt.strategy';
+import { Faculty } from 'src/faculties/entities/faculty.entity';
+import { Major } from 'src/majors/entities/major.entity';
 
 @Module({
-  imports:[
+  imports: [
     SequelizeModule.forFeature([
       Account,
       Admin,
       Student,
-      Teacher
+      Teacher,
+      Faculty,
+      Major,
     ]),
     PassportModule.register({ defaultStrategy: 'jwt' }),
     JwtModule.register({
@@ -26,6 +30,6 @@ import { JwtStrategy } from 'src/auth/jwt.strategy';
     }),
   ],
   controllers: [AccountsController],
-  providers: [AccountsService,JwtStrategy]
+  providers: [AccountsService, JwtStrategy],
 })
 export class AccountsModule {}

@@ -61,7 +61,7 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
     ]);
 
     if (!isRoles || typeof isRoles === 'undefined') {
-      console.log('is member');
+      console.log('is student');
       return user;
     } else if ( user.roleId === Role.admin) {
       console.log('is Admin');
