@@ -3,7 +3,7 @@ import { MajorsService } from './majors.service';
 import { CreateMajorDto } from './dto/create-major.dto';
 import { UpdateMajorDto } from './dto/update-major.dto';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
-import { Roles } from 'src/auth/auth.decorator';
+import { Public, Roles } from 'src/auth/auth.decorator';
 import { Role } from 'src/auth/role.enum';
 
 @Controller('majors')
@@ -19,11 +19,13 @@ export class MajorsController {
   }
   
   @Get()
+  @Public()
   findAll() {
     return this.majorsService.findAll();
   }
 
   @Get(':id')
+  @Public()
   findOne(@Param('id') id: string) {
     return this.majorsService.findOne(+id);
   }

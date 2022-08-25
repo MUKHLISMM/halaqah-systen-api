@@ -5,7 +5,7 @@ import { LogInDto } from 'src/accounts/dto/create-account.dto';
 export class CreateStudentDto extends PartialType(LogInDto) {
   @ApiProperty()
   @IsNotEmpty()
-  @IsNumber()
+
   id: number;
 
   @ApiProperty()
