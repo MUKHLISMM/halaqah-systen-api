@@ -1,6 +1,7 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { InjectModel } from '@nestjs/sequelize';
+import sequelize from 'sequelize';
 import { Admin } from 'src/admins/entities/admin.entity';
 import { Faculty } from 'src/faculties/entities/faculty.entity';
 import { Major } from 'src/majors/entities/major.entity';
@@ -20,7 +21,7 @@ export class AccountsService {
     @InjectModel(Faculty) private faculty: typeof Faculty,
     @InjectModel(Major) private major: typeof Major,
     private jwtService: JwtService,
-  ) {}
+  ) { }
   async create(createAccountDto: CreateAccountDto) {
     let account = await this.accountModel.findOne({
       where: { email: createAccountDto.email },
@@ -30,7 +31,22 @@ export class AccountsService {
     return this.accountModel.create({ ...createAccountDto });
   }
 
-  findAll() {
+  findAll(query: any) {
+    let where: any = {}
+    if (query.roleId) {
+      where = {
+        ...where,
+        roleId: {
+          [sequelize.Op.in]: query.roleId.split(",")
+        }
+      }
+    }
+    if (query.facultyId) {
+      where = {
+        ...where,
+        facultyId: query.facultyId
+      }
+    }
     return this.accountModel.findAll({
       include: [
         {
@@ -43,6 +59,7 @@ export class AccountsService {
           model: this.teacher,
         },
       ],
+      where
     });
   }
 
@@ -62,8 +79,17 @@ export class AccountsService {
     });
   }
 
-  update(id: number, updateAccountDto: UpdateAccountDto) {
-    return this.accountModel.update(updateAccountDto, { where: { id } });
+  async update(id: number, updateAccountDto: UpdateAccountDto) {
+    let acc =await this.accountModel.findByPk(id)
+    
+    return await this.accountModel.sequelize.transaction(async (t) => {
+      if(acc.roleId!==4){
+        await this.teacher.update({...updateAccountDto,id:updateAccountDto.teacherId},{where:{id:acc.teacherId}})
+      }else{
+        await this.student.update({...updateAccountDto,id:updateAccountDto.studentId},{where:{id:acc.studentId}})
+      }
+      await this.accountModel.update(updateAccountDto, { where: { id } ,transaction:t});
+    })
   }
 
   remove(id: number) {
@@ -75,7 +101,7 @@ export class AccountsService {
       include: [
         {
           model: this.admin,
-          include:[
+          include: [
             {
               model: this.faculty,
             },
@@ -119,9 +145,9 @@ export class AccountsService {
     console.log(account);
     let profile = account.admin
       ? account?.admin
-      : account?.taecher
-      ? account?.taecher
-      : account?.student;
+      : account?.teacher
+        ? account?.teacher
+        : account?.student;
     const payload = {
       username: account.userName,
       roleId: account.roleId,
@@ -134,6 +160,7 @@ export class AccountsService {
           plain: false,
         }),
         roleId: account.roleId,
+        userName: account.userName,
         email: account.email,
         accountId: account.id,
       },

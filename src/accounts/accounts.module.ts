@@ -12,6 +12,8 @@ import { jwtConstants } from 'constants/jwt';
 import { JwtStrategy } from 'src/auth/jwt.strategy';
 import { Faculty } from 'src/faculties/entities/faculty.entity';
 import { Major } from 'src/majors/entities/major.entity';
+import { SeederModule } from 'nestjs-sequelize-seeder';
+import { SeedAccount } from './entities/account.seeder';
 
 @Module({
   imports: [
@@ -23,10 +25,13 @@ import { Major } from 'src/majors/entities/major.entity';
       Faculty,
       Major,
     ]),
+    SeederModule.forFeature([
+      SeedAccount
+    ]),
     PassportModule.register({ defaultStrategy: 'jwt' }),
     JwtModule.register({
       secret: jwtConstants.secret,
-      signOptions: { expiresIn: '1h' },
+      signOptions: { expiresIn: '5h' },
     }),
   ],
   controllers: [AccountsController],

@@ -27,7 +27,7 @@ export class StudentsService {
 
     //ค้นหารหัสนักศึกษาใน database = { id: createStudentDto.id }, ข้อมูลที่นักศึกษากรอกมา
     let checkStudent = await this.studentModel.findOne({
-      where: { id: createStudentDto.id },
+      where: { id: createStudentDto.studentId },
     });
 
     if (checkStudent)
@@ -35,15 +35,13 @@ export class StudentsService {
 
     let insertData = await this.studentModel.sequelize.transaction(async (t) => {
       //ใส่ข้อมูลในตารางนักศึกษา 
-      let student = await this.studentModel.create({ ...createStudentDto },{transaction:t});
+      let student = await this.studentModel.create({ ...createStudentDto ,id:createStudentDto.studentId},{transaction:t});
       //ใส่ข้อมูลในตาราง บัญชี้ ผู้ใช่
       let account = await this.accountModel.create(
         {
-        email: createStudentDto.email,
-        password: createStudentDto.password,
+        ...createStudentDto,
         roleId: 4,
         userName: createStudentDto.firstName + ' ' + createStudentDto.lastName,
-        studentId: createStudentDto.id
       },{
         transaction:t
       }

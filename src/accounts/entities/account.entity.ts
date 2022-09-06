@@ -7,6 +7,7 @@ import {
   Table,
 } from 'sequelize-typescript';
 import { Admin } from 'src/admins/entities/admin.entity';
+import { Faculty } from 'src/faculties/entities/faculty.entity';
 import { Student } from 'src/students/entities/student.entity';
 import { Teacher } from 'src/teachers/entities/teacher.entity';
 
@@ -49,11 +50,17 @@ export class Account extends Model {
   @Column
   teacherId: number;
   @BelongsTo(() => Teacher)
-  taecher: Teacher;
+  teacher: Teacher;
 
   @ForeignKey(() => Admin)
   @Column
   adminId: number;
   @BelongsTo(() => Admin)
   admin: Admin;
+ 
+  @ForeignKey(() => Faculty)
+  @Column
+  facultyId: number;
+  @BelongsTo(() => Faculty)
+  faculty: Faculty;
 }

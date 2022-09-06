@@ -1,6 +1,7 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { Public } from 'src/auth/auth.decorator';
+import { Public, Roles } from 'src/auth/auth.decorator';
+import { Role } from 'src/auth/role.enum';
 import { AccountsService } from './accounts.service';
 import { CreateAccountDto, LogInDto } from './dto/create-account.dto';
 import { UpdateAccountDto } from './dto/update-account.dto';
@@ -17,8 +18,8 @@ export class AccountsController {
   }
 
   @Get()
-  findAll() {
-    return this.accountsService.findAll();
+  findAll(@Query()query:any) {
+    return this.accountsService.findAll(query);
   }
 
   @Get(':id')
@@ -39,6 +40,6 @@ export class AccountsController {
   @Post('login')
   @Public()
   Login(@Body() logInDto:LogInDto){
-    return this.accountsService.Login(logInDto) 
+    return this.accountsService.Login(logInDto)
   }
 }

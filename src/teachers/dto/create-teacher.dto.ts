@@ -1,7 +1,12 @@
-import { ApiProperty } from "@nestjs/swagger";
-import { Length } from "class-validator";
+import { ApiProperty, PartialType } from "@nestjs/swagger";
+import { IsNotEmpty, Length, MaxLength } from "class-validator";
+import { LogInDto } from "src/accounts/dto/create-account.dto";
 
-export class CreateTeacherDto {
+export class CreateTeacherDto extends PartialType(LogInDto) {
+      @ApiProperty()
+      @IsNotEmpty()
+      @MaxLength(11)
+      teacherId: number;
 
       @ApiProperty()
       firstName: string;
@@ -38,5 +43,8 @@ export class CreateTeacherDto {
 
       @ApiProperty()
       majorId: number;
+
+      @ApiProperty()
+      roleId: number;
 
 }

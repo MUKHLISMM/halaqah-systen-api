@@ -1,12 +1,12 @@
 import { ApiProperty, PartialType } from '@nestjs/swagger';
-import { IsNotEmpty, IsNumber } from 'class-validator';
+import { IsNotEmpty, IsNumber, Length, Max, MaxLength } from 'class-validator';
 import { LogInDto } from 'src/accounts/dto/create-account.dto';
 
 export class CreateStudentDto extends PartialType(LogInDto) {
   @ApiProperty()
   @IsNotEmpty()
-
-  id: number;
+  @MaxLength(11)
+  studentId: number;
 
   @ApiProperty()
   firstName: string;
