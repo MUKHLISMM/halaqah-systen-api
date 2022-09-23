@@ -8,6 +8,7 @@ import {
 } from 'sequelize-typescript';
 import { Admin } from 'src/admins/entities/admin.entity';
 import { Faculty } from 'src/faculties/entities/faculty.entity';
+import { Major } from 'src/majors/entities/major.entity';
 import { Student } from 'src/students/entities/student.entity';
 import { Teacher } from 'src/teachers/entities/teacher.entity';
 
@@ -35,7 +36,7 @@ export class Account extends Model {
   password: string;
 
   @Column({
-    comment:"1=Admin 2=Teacher 3=Student"
+    comment:"1=Admin 2=facultyAdmin 3=Murabbee 4=Student"
   })
   roleId: number
 
@@ -57,10 +58,11 @@ export class Account extends Model {
   adminId: number;
   @BelongsTo(() => Admin)
   admin: Admin;
- 
+
   @ForeignKey(() => Faculty)
   @Column
   facultyId: number;
   @BelongsTo(() => Faculty)
   faculty: Faculty;
+
 }

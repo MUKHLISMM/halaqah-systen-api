@@ -10,7 +10,6 @@ export class TeachersService {
   constructor(
     @InjectModel(Teacher) private taecherModel: typeof Teacher,
     @InjectModel(Account) private accountModel: typeof Account,
-
   ) { }
   async create(createTeacherDto: CreateTeacherDto) {
     console.log(createTeacherDto);
@@ -30,7 +29,7 @@ export class TeachersService {
           });
 
           if (checkTeacher)
-            throw new HttpException('รหัสนักศึกาานี้ถูกใช้งานแล้ว', HttpStatus.BAD_REQUEST);
+            throw new HttpException('รหัสนักศึกษานี้ถูกใช้งานแล้ว', HttpStatus.BAD_REQUEST);
 
           let insertData = await this.taecherModel.sequelize.transaction(async (t) => {
             //ใส่ข้อมูลในตารางนักศึกษา

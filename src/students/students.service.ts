@@ -1,6 +1,8 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { Account } from 'src/accounts/entities/account.entity';
+import { Faculty } from 'src/faculties/entities/faculty.entity';
+import { Major } from 'src/majors/entities/major.entity';
 import { CreateStudentDto } from './dto/create-student.dto';
 import { UpdateStudentDto } from './dto/update-student.dto';
 import { Student } from './entities/student.entity';
@@ -10,6 +12,10 @@ export class StudentsService {
   constructor(
     @InjectModel(Student) private studentModel: typeof Student,
     @InjectModel(Account) private accountModel: typeof Account,
+    @InjectModel(Faculty) private faculty: typeof Faculty,
+    @InjectModel(Major) private major: typeof Major,
+    
+
 
   ) { }
 
@@ -54,9 +60,33 @@ export class StudentsService {
 
   }
 
-  findAll() {
+  findAll(query:any) {
+    let where: any = {}
+
+    if (query.facultyId) {
+      where = {
+        ...where,
+        facultyId: query.facultyId
+      }
+    }
+    if (query.groupMemberId) {
+      where = {
+        ...where,
+        groupMemberId: query.groupMemberId==="null"?null:query.groupMemberId
+
+      }
+    }
+    
     return this.studentModel.findAll({
-      paranoid: false
+      include: [
+        {
+          model: this.faculty,
+        },
+        {
+          model: this.major,
+        },
+      ],
+      where
     });
   }
 

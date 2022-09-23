@@ -1,5 +1,8 @@
-import { BelongsTo, Column, DataType, ForeignKey, Model, Table } from 'sequelize-typescript';
+import { BelongsTo, BelongsToMany, Column, DataType, ForeignKey, HasMany, Model, Table } from 'sequelize-typescript';
 import { Faculty } from 'src/faculties/entities/faculty.entity';
+import { GroupMember } from 'src/group-member/entities/group-member.entity';
+import { HalaqahStudent } from 'src/halaqah-student/entities/halaqah-student.entity';
+import { Halaqah } from 'src/halaqah/entities/halaqah.entity';
 import { Major } from 'src/majors/entities/major.entity';
 
 @Table({
@@ -47,4 +50,14 @@ export class Student extends Model {
   majorId: number;
   @BelongsTo(()=> Major)
   major : Major;
+  
+  @ForeignKey(() =>GroupMember)
+  @Column
+  groupMemberId: number;
+  @BelongsTo(()=> GroupMember)
+  groupMember : GroupMember;
+
+
+  @BelongsToMany(()=>Halaqah,()=>HalaqahStudent)
+  halaqah:Halaqah[]
 }

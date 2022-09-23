@@ -8,7 +8,7 @@ import { Role } from 'src/auth/role.enum';
 
 @Controller('teachers')
 @ApiTags('teachers')
-@Roles(Role.teacherAdmin)
+@Roles(Role.facultyAdmin)
 export class TeachersController {
   constructor(private readonly teachersService: TeachersService) {}
 

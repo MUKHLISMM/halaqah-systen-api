@@ -34,4 +34,8 @@ export class CreateStudentDto extends PartialType(LogInDto) {
 
   @ApiProperty()
   majorId: number;
+
+  @ApiProperty()
+  groupMemberId: number
+
 }

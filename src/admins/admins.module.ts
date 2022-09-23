@@ -3,18 +3,17 @@ import { AdminsService } from './admins.service';
 import { AdminsController } from './admins.controller';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { Admin } from './entities/admin.entity';
-import { Faculty } from 'src/faculties/entities/faculty.entity';
-import { Major } from 'src/majors/entities/major.entity';
+import { SeedAdmin } from './entities/admin.seeder';
+import { SeederModule } from 'nestjs-sequelize-seeder';
+import { Account } from 'src/accounts/entities/account.entity';
 
 @Module({
-  imports:[
+  imports: [
+    SeederModule.forFeature([SeedAdmin]),
     SequelizeModule.forFeature([
-      Admin,
-      Faculty,
-      Major
-    ])
+      Admin,Account])
   ],
   controllers: [AdminsController],
   providers: [AdminsService]
 })
-export class AdminsModule {}
+export class AdminsModule { }

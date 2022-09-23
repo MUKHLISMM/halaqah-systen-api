@@ -11,7 +11,7 @@ export class Major  extends Model{
         autoIncrement:true,
         unique:true
     })
-    id: number
+   id: number
 
     @Column
     name: String

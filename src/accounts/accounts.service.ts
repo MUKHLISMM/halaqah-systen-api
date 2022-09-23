@@ -80,15 +80,15 @@ export class AccountsService {
   }
 
   async update(id: number, updateAccountDto: UpdateAccountDto) {
-    let acc =await this.accountModel.findByPk(id)
-    
+    let acc = await this.accountModel.findByPk(id)
+
     return await this.accountModel.sequelize.transaction(async (t) => {
-      if(acc.roleId!==4){
-        await this.teacher.update({...updateAccountDto,id:updateAccountDto.teacherId},{where:{id:acc.teacherId}})
-      }else{
-        await this.student.update({...updateAccountDto,id:updateAccountDto.studentId},{where:{id:acc.studentId}})
+      if (acc.roleId !== 4) {
+        await this.teacher.update({ ...updateAccountDto, id: updateAccountDto.teacherId }, { where: { id: acc.teacherId } })
+      } else {
+        await this.student.update({ ...updateAccountDto, id: updateAccountDto.studentId }, { where: { id: acc.studentId } })
       }
-      await this.accountModel.update(updateAccountDto, { where: { id } ,transaction:t});
+      await this.accountModel.update(updateAccountDto, { where: { id }, transaction: t });
     })
   }
 
@@ -105,9 +105,7 @@ export class AccountsService {
             {
               model: this.faculty,
             },
-            {
-              model: this.major,
-            }
+            
           ]
         },
         {
@@ -151,6 +149,7 @@ export class AccountsService {
     const payload = {
       username: account.userName,
       roleId: account.roleId,
+
       sub: account.id,
     };
     return {
@@ -163,6 +162,8 @@ export class AccountsService {
         userName: account.userName,
         email: account.email,
         accountId: account.id,
+        facultyId: account.facultyId,
+        
       },
     };
   }

@@ -66,10 +66,12 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
     } else if ( user.roleId === Role.admin) {
       console.log('is Admin');
       return user;
-    } else if (isRoles === Role.teacherAdmin && user.roleId === Role.teacherAdmin) {
-      console.log('teacherAdmin');
+    } else if (isRoles === Role.facultyAdmin && user.roleId === Role.facultyAdmin) {
+      console.log('facultyAdmin');
       return user;
-    } else if (isRoles === Role.teacher && (user.roleId === Role.teacher || user.roleId === Role.teacherAdmin)) {
+    } else if (isRoles === Role.teacher && user.roleId === Role.teacher )
+    // else if (isRoles === Role.teacher && (user.roleId === Role.teacher || user.roleId === Role.teacherAdmin))
+    {
       console.log('teacher');
       return user
     } else {

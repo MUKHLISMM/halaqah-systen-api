@@ -12,6 +12,10 @@ import { APP_GUARD } from '@nestjs/core';
 import { AuthModule } from './auth/auth.module';
 import { JwtStrategy } from './auth/jwt.strategy';
 import { JwtAuthGuard } from './auth/jwt.guard';
+import { CatagoryModule } from './catagory/catagory.module';
+import { HalaqahModule } from './halaqah/halaqah.module';
+import { HalaqahStudentModule } from './halaqah-student/halaqah-student.module';
+import { GroupMemberModule } from './group-member/group-member.module';
 
 
 @Module({
@@ -25,6 +29,10 @@ import { JwtAuthGuard } from './auth/jwt.guard';
     TeachersModule,
     AdminsModule,
     AuthModule,
+    CatagoryModule,
+    HalaqahModule,
+    HalaqahStudentModule,
+    GroupMemberModule,
   ],
   // controllers: [AppController],
   providers: [

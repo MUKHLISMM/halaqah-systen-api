@@ -6,6 +6,7 @@ import { SequelizeModule } from '@nestjs/sequelize';
 import { Faculty } from 'src/faculties/entities/faculty.entity';
 import { SeedMajor } from './entities/major.seeder';
 import { SeederModule } from 'nestjs-sequelize-seeder';
+import { Account } from 'src/accounts/entities/account.entity';
 
 @Module({
   imports: [
