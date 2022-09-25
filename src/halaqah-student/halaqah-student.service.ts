@@ -30,11 +30,36 @@ export class HalaqahStudentService {
       throw new HttpException("File is not Math", HttpStatus.BAD_REQUEST)
     }
 
-    return this.halaqahStudentModel.create({ ...createHalaqahStudentDto })
+    let insertData = await this.halaqahStudentModel.sequelize.transaction(async (t) => {
+      let student = await this.halaqahStudentModel.create({ ...createHalaqahStudentDto,id:createHalaqahStudentDto.id+1},{transaction:t}); 
+     
+      return {
+        student
+      }
+    })
+    return insertData
+
   }
 
-  findAll() {
-    return this.halaqahStudentModel.findAll();
+  findAll(query:any) {
+    let where: any = {}
+
+    if (query.studentId) {
+      where = {
+        ...where,
+        studentId: query.studentId
+      }
+    }
+    return this.halaqahStudentModel.findAll({
+      include: [
+        {
+          model: this.student,
+        },
+
+      ],
+      where
+    });
+ 
   }
 
   findOne(id: number) {
